@@ -1,20 +1,62 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.widget.ConstraintLayout
+<layout
         xmlns:android="http://schemas.android.com/apk/res/android"
         xmlns:app="http://schemas.android.com/apk/res-auto"
-        xmlns:tools="http://schemas.android.com/tools"
-        android:id="@+id/container"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        tools:context=".ui.MainActivity">
-    <com.google.android.material.tabs.TabLayout android:layout_width="match_parent"
-                                                android:id="@+id/main_tablayout"
-                                                app:tabSelectedTextColor="@color/colorAccent"
-                                                app:layout_constraintBottom_toBottomOf="parent"
-                                                android:layout_height="wrap_content"/>
-    <androidx.viewpager.widget.ViewPager android:layout_width="match_parent"
-                                         android:id="@+id/main_viewpager"
-                                         app:layout_constraintBottom_toTopOf="@+id/main_tablayout"
-                                         android:layout_height="wrap_content"/>
+        xmlns:tools="http://schemas.android.com/tools">
+    <data>
+        <import type="android.view.View"/>
+        <variable
+                name="viewModel"
+                type="fr.jorisfavier.a2048datavis.ui.home.MainViewModel"/>
+    </data>
+    <androidx.constraintlayout.widget.ConstraintLayout
+            android:id="@+id/container"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            tools:context=".ui.home.MainActivity">
+        <LinearLayout android:layout_width="wrap_content"
+                      android:id="@+id/main_date_filter_container"
+                      android:orientation="horizontal"
+                      app:layout_constraintTop_toTopOf="parent"
+                      app:layout_constraintLeft_toLeftOf="parent"
+                      app:layout_constraintRight_toRightOf="parent"
+                      android:layout_height="wrap_content">
+            <TextView android:layout_width="wrap_content"
+                      android:text="@string/from"
+                      android:layout_height="wrap_content"/>
+            <Button android:layout_width="wrap_content"
+                    android:layout_marginStart="10dp"
+                    android:background="@android:color/transparent"
+                    tools:text="2019/01/01"
+                    android:text="@{viewModel.startDateFormatted}"
+                    android:drawableEnd="@drawable/ic_arrow_drop_down_black_24dp"
+                    android:id="@+id/main_startdate_button"
+                    android:layout_height="wrap_content"/>
+            <TextView android:layout_width="wrap_content"
+                      android:text="@string/to"
+                      android:layout_height="wrap_content"/>
+            <Button android:layout_width="wrap_content"
+                    android:layout_marginStart="10dp"
+                    android:background="@android:color/transparent"
+                    tools:text="2019/01/10"
+                    android:text="@{viewModel.endDateFormatted}"
+                    android:drawableEnd="@drawable/ic_arrow_drop_down_black_24dp"
+                    android:id="@+id/main_enddate_button"
+                    android:layout_height="wrap_content"/>
 
-</androidx.constraintlayout.widget.ConstraintLayout>
+        </LinearLayout>
+        <com.google.android.material.tabs.TabLayout android:layout_width="match_parent"
+                                                    android:id="@+id/main_tablayout"
+                                                    android:background="@color/colorAccent"
+                                                    app:tabTextColor="#99FFFFFF"
+                                                    app:tabSelectedTextColor="@android:color/white"
+                                                    app:layout_constraintBottom_toBottomOf="parent"
+                                                    android:layout_height="wrap_content"/>
+        <androidx.viewpager.widget.ViewPager android:layout_width="match_parent"
+                                             android:id="@+id/main_viewpager"
+                                             app:layout_constraintTop_toBottomOf="@id/main_date_filter_container"
+                                             app:layout_constraintBottom_toTopOf="@id/main_tablayout"
+                                             android:layout_height="0dp"/>
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+</layout>
