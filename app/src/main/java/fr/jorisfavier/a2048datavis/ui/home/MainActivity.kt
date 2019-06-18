@@ -6,15 +6,21 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.databinding.DataBindingUtil
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModelProviders
+import fr.jorisfavier.a2048datavis.DataVisApp
 import fr.jorisfavier.a2048datavis.R
+import fr.jorisfavier.a2048datavis.api.AppAnnieService
 import fr.jorisfavier.a2048datavis.databinding.ActivityMainBinding
 import fr.jorisfavier.a2048datavis.utils.dayOfMonth
 import fr.jorisfavier.a2048datavis.utils.month
 import fr.jorisfavier.a2048datavis.utils.year
 import kotlinx.android.synthetic.main.activity_main.*
 import java.util.*
+import javax.inject.Inject
 
 class MainActivity : AppCompatActivity() {
+
+    @Inject
+    lateinit var appAnnieService: AppAnnieService
 
     lateinit var viewModel: MainViewModel
 
@@ -22,12 +28,14 @@ class MainActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         val binding = DataBindingUtil.setContentView<ActivityMainBinding>(this,
             R.layout.activity_main)
-
+        DataVisApp.currentInstance?.appModule?.inject(this)
         viewModel = ViewModelProviders.of(this).get(MainViewModel::class.java)
+        viewModel.appAnnieService = appAnnieService
         binding.setLifecycleOwner(this)
         binding.viewModel = viewModel
         initPagerAdapter()
         initDatePickerButtons()
+        viewModel.loadProductDates()
     }
 
     private fun initPagerAdapter() {
@@ -67,7 +75,7 @@ class MainActivity : AppCompatActivity() {
             minDate?.let {
                 datePickerDialog.datePicker.minDate = it.time
             }
-            maxDate?.let { 
+            maxDate?.let {
                 datePickerDialog.datePicker.maxDate = it.time
             }
             datePickerDialog.show()
