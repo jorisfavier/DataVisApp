@@ -22,9 +22,19 @@ fun Date.dayOfMonth(): Int {
 }
 
 /**
- * Returns a String version of the date based on the pattern MMM d, yyyy
+ * Returns a String version of the date
+ * @return a String based on the pattern MMM d, yyyy
  */
 fun Date.formatStandard(): String {
     val formatter = SimpleDateFormat("MMM d, yyyy", Locale.getDefault())
+    return formatter.format(this)
+}
+
+/**
+ * Returns a String version of the date based on the AppAnnie server date pattern
+ * @return a String following the yyyy-MM-dd pattern
+ */
+fun Date.formatForApi(): String {
+    val formatter = SimpleDateFormat("yyyy-MM-dd", Locale.getDefault())
     return formatter.format(this)
 }

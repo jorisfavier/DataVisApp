@@ -28,14 +28,15 @@ class MainActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         val binding = DataBindingUtil.setContentView<ActivityMainBinding>(this,
             R.layout.activity_main)
+        binding.setLifecycleOwner(this)
         DataVisApp.currentInstance?.appModule?.inject(this)
         viewModel = ViewModelProviders.of(this).get(MainViewModel::class.java)
         viewModel.appAnnieService = appAnnieService
-        binding.setLifecycleOwner(this)
         binding.viewModel = viewModel
         initPagerAdapter()
         initDatePickerButtons()
         viewModel.loadProductDates()
+        initObserver()
     }
 
     private fun initPagerAdapter() {
@@ -45,12 +46,37 @@ class MainActivity : AppCompatActivity() {
     }
 
     private fun initDatePickerButtons(){
-        main_startdate_button.setOnClickListener { view ->
+        main_startdate_button.setOnClickListener {
             showDatePickerDialog(viewModel.selectedStartDate, viewModel.startDate, viewModel.endDate)
         }
-        main_enddate_button.setOnClickListener { view ->
+        main_enddate_button.setOnClickListener {
             showDatePickerDialog(viewModel.selectedEndDate, viewModel.startDate, viewModel.endDate)
         }
+    }
+
+    private fun initObserver(){
+        viewModel.selectedStartDate.observe(this, androidx.lifecycle.Observer {
+            loadSalesData()
+        })
+        viewModel.selectedEndDate.observe(this, androidx.lifecycle.Observer {
+            loadSalesData()
+        })
+        viewModel.filter.observe(this, androidx.lifecycle.Observer {
+            loadSalesData()
+        })
+        viewModel.getError().observe(this,androidx.lifecycle.Observer { errorMessage ->
+            errorMessage?.let {
+                main_error_label.text = it
+            }
+        })
+    }
+
+    private fun loadSalesData(){
+        val start = viewModel.selectedStartDate.value ?: return
+        val end = viewModel.selectedEndDate.value ?: return
+        val filter = viewModel.filter.value ?: return
+
+        viewModel.loadSales(start, end, filter)
     }
 
     /**

@@ -2,4 +2,7 @@
     <string name="app_name">2048DataVis</string>
     <string name="from">From</string>
     <string name="to">to</string>
+    <string name="visualize_data_by">Visualize data by :</string>
+    <string name="dates_filter_name">Dates</string>
+    <string name="country_region_filter_name">Country/Region</string>
 </resources>

@@ -45,6 +45,27 @@
                     android:layout_height="wrap_content"/>
 
         </LinearLayout>
+        <RadioGroup android:layout_width="wrap_content"
+                    android:orientation="horizontal"
+                    android:id="@+id/main_visualization_filter_container"
+                    app:layout_constraintLeft_toLeftOf="parent"
+                    android:checkedButton="@={viewModel.radioCheckedId}"
+                    app:layout_constraintRight_toRightOf="parent"
+                    app:layout_constraintTop_toBottomOf="@+id/main_date_filter_container"
+                    android:layout_height="wrap_content">
+            <TextView android:layout_width="wrap_content"
+                      android:text="@string/visualize_data_by"
+                      android:layout_height="wrap_content"/>
+            <RadioButton android:layout_width="wrap_content"
+                         android:id="@+id/main_date_choice"
+                         android:layout_marginEnd="5dp"
+                         android:text="@string/dates_filter_name"
+                         android:layout_height="wrap_content"/>
+            <RadioButton android:layout_width="wrap_content"
+                         android:text="@string/country_region_filter_name"
+                         android:id="@+id/main_country_choice"
+                         android:layout_height="wrap_content"/>
+        </RadioGroup>
         <com.google.android.material.tabs.TabLayout android:layout_width="match_parent"
                                                     android:id="@+id/main_tablayout"
                                                     android:background="@color/colorAccent"
@@ -54,9 +75,18 @@
                                                     android:layout_height="wrap_content"/>
         <androidx.viewpager.widget.ViewPager android:layout_width="match_parent"
                                              android:id="@+id/main_viewpager"
-                                             app:layout_constraintTop_toBottomOf="@id/main_date_filter_container"
+                                             android:visibility="@{viewModel.error == null ? View.VISIBLE : View.GONE}"
+                                             app:layout_constraintTop_toBottomOf="@id/main_visualization_filter_container"
                                              app:layout_constraintBottom_toTopOf="@id/main_tablayout"
                                              android:layout_height="0dp"/>
+        <TextView android:layout_width="match_parent"
+                  android:id="@+id/main_error_label"
+                  app:layout_constraintTop_toBottomOf="@id/main_visualization_filter_container"
+                  app:layout_constraintBottom_toTopOf="@id/main_tablayout"
+                  tools:text="An error occured"
+                  android:textAlignment="center"
+                  android:visibility="@{viewModel.error != null ? View.VISIBLE : View.GONE}"
+                  android:layout_height="wrap_content"/>
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 </layout>
