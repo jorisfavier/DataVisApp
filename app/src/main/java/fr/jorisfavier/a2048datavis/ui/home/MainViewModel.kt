@@ -115,9 +115,12 @@ class MainViewModel: ViewModel() {
                         salesResponseDTO.salesList.forEach { saleDto ->
                             val label = if (filter == DataFilterEnum.DATE) saleDto.date
                             else saleDto.country
-
-                            dlData.add(DataObject(label,saleDto.units.product.downloads))
-                            revenueData.add(DataObject(label,saleDto.revenue.iap.sales))
+                            if(saleDto.units.product.downloads > 0){
+                                dlData.add(DataObject(label,saleDto.units.product.downloads))
+                            }
+                            if(saleDto.revenue.iap.sales > 0){
+                                revenueData.add(DataObject(label,saleDto.revenue.iap.sales))
+                            }
                         }
                         _downloadData.value = dlData
                         _revenueData.value = revenueData

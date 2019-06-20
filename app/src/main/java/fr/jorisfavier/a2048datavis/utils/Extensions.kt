@@ -9,6 +9,7 @@ import com.github.mikephil.charting.listener.OnChartValueSelectedListener
 import com.github.mikephil.charting.utils.ColorTemplate
 import fr.jorisfavier.a2048datavis.model.DataObject
 import fr.jorisfavier.a2048datavis.model.DataValueFormatter
+import java.text.DecimalFormat
 import java.text.SimpleDateFormat
 import java.util.*
 
@@ -48,6 +49,11 @@ fun Date.formatForApi(): String {
     return formatter.format(this)
 }
 
+fun Double.formatStandard(): String {
+    val formatter = DecimalFormat("##.##")
+    return formatter.format(this)
+}
+
 /**
  * Configure a pie chart with a dataObject's list
  */
@@ -55,7 +61,7 @@ fun PieChart.configureWith(dataObjects: List<DataObject>) {
     val entries = dataObjects.map { dataObject ->
         PieEntry(dataObject.value.toFloat(),dataObject.label)
     }
-    val dataSet = PieDataSet(entries,"Download").apply {
+    val dataSet = PieDataSet(entries,"").apply {
         setColors(*ColorTemplate.COLORFUL_COLORS)
         setDrawValues(false)
     }
@@ -85,7 +91,7 @@ fun LineChart.configureWith(dataObjects: List<DataObject>){
         labels.add(dataObject.label)
         Entry(index.toFloat(),dataObject.value.toFloat())
     }
-    val dataSet = LineDataSet(entries,"Download")
+    val dataSet = LineDataSet(entries,"")
     data = LineData(dataSet)
     description.isEnabled = false
     legend.isEnabled = false

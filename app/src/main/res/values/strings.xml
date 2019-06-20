@@ -5,5 +5,6 @@
     <string name="visualize_data_by">Visualize data by :</string>
     <string name="dates_filter_name">Dates</string>
     <string name="country_region_filter_name">Country/Region</string>
-    <string name="total_dl">Total download : %d</string>
+    <string name="total_dl">Total download : %s</string>
+    <string name="total_revenue">Total revenue : %s$</string>
 </resources>

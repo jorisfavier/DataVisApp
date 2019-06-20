@@ -1,14 +1,19 @@
 <?xml version="1.0" encoding="utf-8"?>
-<FrameLayout
+<LinearLayout
         xmlns:android="http://schemas.android.com/apk/res/android"
         xmlns:tools="http://schemas.android.com/tools"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
+        android:id="@+id/revenue_container"
+        android:orientation="vertical"
         tools:context=".ui.revenue.RevenueVisualizationFragment">
 
     <TextView
+            android:id="@+id/revenue_total"
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:text="Revenue"/>
+            android:textSize="24sp"
+            android:textAlignment="center"
+            android:layout_height="wrap_content"
+            tools:text="Total revenues : 100$"/>
 
-</FrameLayout>
+</LinearLayout>
